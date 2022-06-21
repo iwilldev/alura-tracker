@@ -5,7 +5,7 @@
         {{ description }}
       </div>
       <div class="column">
-        <cronometro :tempo-em-segundos="time" />
+        <Clock :tempo-em-segundos="time" />
       </div>
     </div>
   </div>
@@ -13,7 +13,7 @@
 
 <script lang="ts" setup>
 import { defineProps } from 'vue';
-import Cronometro from './Cronometro.vue';
+import Clock from './Clock.vue';
 
 defineProps({
   description: {
