@@ -9,13 +9,13 @@
             type="text"
             class="input"
             placeholder="Qual tarefa você deseja iniciar?"
-            v-model="novaTarefa"
+            v-model="newTaskDescription"
           />
         </label>
       </div>
-      <Temporizador
-        :desabilitado="!novaTarefa"
-        @tarefa-finalizada="finalizarTarefa"
+      <Timer
+        :disabled="!newTaskDescription"
+        @task-finished="finishTask"
       />
     </div>
   </div>
@@ -23,12 +23,12 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import Temporizador from './Temporizador.vue';
+import Timer from './Timer.vue';
 
-const novaTarefa = ref('');
+const newTaskDescription = ref('');
 
-function finalizarTarefa(time: number) {
-  console.log(`Tarefa (${novaTarefa.value}) finalizada com ${time} segundos`);
-  novaTarefa.value = '';
+function finishTask(time: number) {
+  console.log(`Tarefa (${newTaskDescription.value}) finalizada com ${time} segundos`);
+  newTaskDescription.value = '';
 }
 </script>
