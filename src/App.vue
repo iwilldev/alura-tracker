@@ -4,7 +4,7 @@
       <sidebar />
     </div>
     <div class="column is-three-quarter">
-      <formulario @saveTask="saveTask" />
+      <Form @saveTask="saveTask" />
       <div class="lista">
         <task
           :key="index"
@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import Sidebar from './components/Sidebar.vue';
-import Formulario from './components/Formulario.vue';
+import Form from './components/Form.vue';
 import Task from './components/Task.vue';
 
 interface ITask {
