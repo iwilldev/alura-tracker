@@ -2,16 +2,16 @@
   <div class="column">
     <div class="is-flex is-align-items-center is-justify-content-space-between">
       <Cronometro :tempo-em-segundos="tempoEmSegundos" />
-      <Botao
-        texto="Play"
-        icone="play"
-        :desabilitado="cronometroRodando || desabilitado"
+      <ActionButton
+        label="Play"
+        faIcon="play"
+        :disabled="cronometroRodando || desabilitado"
         @click="iniciarContagem"
       />
-      <Botao
-        texto="Stop"
-        icone="stop"
-        :desabilitado="cronometroParado || desabilitado"
+      <ActionButton
+        label="Stop"
+        faIcon="stop"
+        :disabled="cronometroParado || desabilitado"
         @click="pararContagem"
       />
     </div>
@@ -23,7 +23,7 @@ import {
   computed, defineEmits, defineProps, ref,
 } from 'vue';
 import Cronometro from './Cronometro.vue';
-import Botao from './Botao.vue';
+import ActionButton from './ActionButton.vue';
 
 const tempoEmSegundos = ref(0);
 const cronometro = ref(0);
