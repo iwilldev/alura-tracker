@@ -1,27 +1,44 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <main class="columns is-gapless is-multiline">
+    <div class="column is-one-quarter">
+      <barra-lateral />
+    </div>
+    <div class="column is-three-quarter">
+      <formulario @saveTask="saveTask" />
+      <div class="lista">
+        <task
+          :key="index"
+          v-for="(task, index) of taskList"
+          :description="task.description"
+          :time="task.time"
+        />
+      </div>
+    </div>
+  </main>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+<script lang="ts" setup>
+import { ref } from 'vue';
+import BarraLateral from './components/BarraLateral.vue';
+import Formulario from './components/Formulario.vue';
+import Task from './components/Task.vue';
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld,
-  },
-});
+interface ITask {
+  description: string;
+  time: number;
+}
+const taskList = ref<ITask[]>([]);
+
+function saveTask(description: string, time: number) {
+  taskList.value.push({
+    description,
+    time,
+  });
+}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.lista {
+  padding: 1.25rem;
 }
 </style>
