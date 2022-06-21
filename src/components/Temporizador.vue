@@ -1,18 +1,18 @@
 <template>
   <div class="column">
     <div class="is-flex is-align-items-center is-justify-content-space-between">
-      <Cronometro :tempo-em-segundos="tempoEmSegundos" />
+      <Clock :time-in-seconds="timeInSeconds" />
       <ActionButton
         label="Play"
         faIcon="play"
-        :disabled="cronometroRodando || desabilitado"
-        @click="iniciarContagem"
+        :disabled="timerIsActive || disabled"
+        @click="startTimer"
       />
       <ActionButton
         label="Stop"
         faIcon="stop"
-        :disabled="cronometroParado || desabilitado"
-        @click="pararContagem"
+        :disabled="timerIsInactive || disabled"
+        @click="stopTimer"
       />
     </div>
   </div>
@@ -22,34 +22,34 @@
 import {
   computed, defineEmits, defineProps, ref,
 } from 'vue';
-import Cronometro from './Cronometro.vue';
+import Clock from './Clock.vue';
 import ActionButton from './ActionButton.vue';
 
-const tempoEmSegundos = ref(0);
+const timeInSeconds = ref(0);
 const cronometro = ref(0);
-const cronometroRodando = ref(false);
-const cronometroParado = computed(() => !cronometroRodando.value);
+const timerIsActive = ref(false);
+const timerIsInactive = computed(() => !timerIsActive.value);
 
-const emit = defineEmits<{(event: 'tarefaFinalizada', time: number): void}>();
+const emit = defineEmits<{(event: 'taskFinished', time: number): void}>();
 
 defineProps({
-  desabilitado: {
+  disabled: {
     type: Boolean,
     default: false,
   },
 });
 
-function iniciarContagem() {
-  cronometroRodando.value = true;
+function startTimer() {
+  timerIsActive.value = true;
   cronometro.value = setInterval(() => {
-    tempoEmSegundos.value += 1;
+    timeInSeconds.value += 1;
   }, 1000);
 }
 
-function pararContagem() {
+function stopTimer() {
   clearInterval(cronometro.value);
-  emit('tarefaFinalizada', tempoEmSegundos.value);
-  cronometroRodando.value = false;
-  tempoEmSegundos.value = 0;
+  emit('taskFinished', timeInSeconds.value);
+  timerIsActive.value = false;
+  timeInSeconds.value = 0;
 }
 </script>
