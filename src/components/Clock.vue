@@ -1,6 +1,6 @@
 <template>
   <section>
-    <strong> {{ tempoDecorrido }} </strong>
+    <strong> {{ formattedTime }} </strong>
   </section>
 </template>
 
@@ -8,14 +8,14 @@
 import { computed, defineProps } from 'vue';
 
 const props = defineProps({
-  tempoEmSegundos: {
+  timeInSeconds: {
     type: Number,
     default: 0,
   },
 });
 
-const tempoDecorrido = computed(
-  () => new Date(props.tempoEmSegundos * 1000)
+const formattedTime = computed(
+  () => new Date(props.timeInSeconds * 1000)
     .toISOString()
     .substring(11, 19),
 );
