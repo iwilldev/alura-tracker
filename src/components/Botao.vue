@@ -1,9 +1,9 @@
 <template>
-  <button class="button" @click="click" :disabled="desabilitado">
+  <button class="button" @click="click" :disabled="disabled">
     <span class="icon">
-      <i :class="`fas fa-${icone}`"></i>
+      <i :class="`fas fa-${faIcon}`"></i>
     </span>
-    <span>{{ texto }}</span>
+    <span>{{ label }}</span>
   </button>
 </template>
 
@@ -13,15 +13,15 @@ import { defineEmits, defineProps } from 'vue';
 const emit = defineEmits<{(event: 'click'): void}>();
 
 defineProps({
-  texto: {
+  label: {
     type: String,
     default: '',
   },
-  icone: {
+  faIcon: {
     type: String,
     default: '',
   },
-  desabilitado: {
+  disabled: {
     type: Boolean,
     default: false,
   },
