@@ -1,7 +1,7 @@
 <template>
   <main class="columns is-gapless is-multiline">
     <div class="column is-one-quarter">
-      <barra-lateral />
+      <sidebar />
     </div>
     <div class="column is-three-quarter">
       <formulario @saveTask="saveTask" />
@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import BarraLateral from './components/BarraLateral.vue';
+import Sidebar from './components/Sidebar.vue';
 import Formulario from './components/Formulario.vue';
 import Task from './components/Task.vue';
 
