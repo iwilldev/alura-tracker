@@ -31,3 +31,12 @@ function click() {
   emit('click');
 }
 </script>
+
+<style scoped>
+.button {
+  background-color: var(--primary-bg);
+  color: var(--primary-color);
+  border-color: var(--primary-bg-darker);
+  transition: all 0.2s ease-in-out;
+}
+</style>

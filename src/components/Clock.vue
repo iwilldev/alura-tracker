@@ -20,3 +20,9 @@ const formattedTime = computed(
     .substring(11, 19),
 );
 </script>
+
+<style scoped>
+strong {
+  color: var(--primary-color);
+}
+</style>

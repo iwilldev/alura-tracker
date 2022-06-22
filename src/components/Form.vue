@@ -1,7 +1,11 @@
 <template>
   <div class="box">
     <div class="columns">
-      <div class="column is-8" role="form" aria-label="Formulário para criação de uma nova tarefa">
+      <div
+        class="column is-8"
+        role="form"
+        aria-label="Formulário para criação de uma nova tarefa"
+      >
         <label for="new-task">
           <input
             id="new-task"
@@ -22,13 +26,34 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { defineEmits, ref } from 'vue';
 import Timer from './Timer.vue';
+
+type EventsTyping = {
+  (event: 'saveTask', description: string, time: number): void
+}
+
+const emit = defineEmits<EventsTyping>();
 
 const newTaskDescription = ref('');
 
 function finishTask(time: number) {
-  console.log(`Tarefa (${newTaskDescription.value}) finalizada com ${time} segundos`);
+  emit('saveTask', newTaskDescription.value, time);
   newTaskDescription.value = '';
 }
 </script>
+
+<style scoped>
+.box {
+  background-color: var(--primary-bg);
+  color: var(--primary-color);
+}
+.input {
+  background-color: var(--primary-bg-dark);
+  color: var(--primary-color);
+}
+.input::placeholder {
+  color: var(--primary-color);
+  opacity: 0.75;
+}
+</style>
