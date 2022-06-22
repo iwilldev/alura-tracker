@@ -3,6 +3,18 @@
     <h1 class="has-text-centered">
       <img src="../assets/logo.png" alt="Logo Alura Tracker">
     </h1>
+    <div class="is-flex is-flex-direction-column">
+      <router-link
+        :key="route.name"
+        v-for="route in routes"
+        :to="route.path"
+        class="mt-2"
+      >
+        <button class="button is-fullwidth is-outlined is-link">
+          {{ route.name }}
+        </button>
+      </router-link>
+    </div>
     <label class="theme-switch" for="theme-switch">
       <input
         id="theme-switch"
@@ -18,6 +30,9 @@
 
 <script lang="ts" setup>
 import { defineEmits, defineProps } from 'vue';
+import { useRouter } from 'vue-router';
+
+const { options: { routes } } = useRouter();
 
 defineProps({
   isDarkMode: {
@@ -42,6 +57,7 @@ header {
   height: 100vh;
   background-color: var(--primary-bg-dark);
   color: var(--primary-color);
+  flex-direction: column;
 }
 @media only screen and (max-width: 768px) {
   header {
