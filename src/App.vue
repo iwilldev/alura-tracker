@@ -4,51 +4,23 @@
       <Sidebar @change-theme="toggleDarkMode" :is-dark-mode="darkMode" />
     </div>
     <div class="column is-three-quarter content">
-      <Form @save-task="saveTask" />
-      <div class="lista">
-        <task
-          :key="index"
-          v-for="(task, index) of taskList"
-          :task="task"
-        />
-        <Box v-if="emptyList">
-          <p class="has-text-centered">
-            Nenhuma tarefa finalizada.
-          </p>
-        </Box>
-      </div>
+      <router-view />
     </div>
   </main>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
-import Box from './components/Box.vue';
-import Form from './components/Form.vue';
-import Sidebar from './components/Sidebar.vue';
-import Task from './components/Task.vue';
-import ITask from './interfaces/ITask';
+import { ref } from 'vue';
+import Sidebar from '@/components/Sidebar.vue';
 
 const darkMode = ref(false);
-const taskList = ref<ITask[]>([]);
-const emptyList = computed(() => taskList.value.length === 0);
 
 function toggleDarkMode() {
   darkMode.value = !darkMode.value;
 }
-
-function saveTask(description: string, time: number) {
-  taskList.value.unshift({
-    description,
-    time,
-  });
-}
 </script>
 
 <style>
-.lista {
-  padding: 1.25rem;
-}
 main {
   height: 100vh;
   --primary-bg: #eaeaea;
