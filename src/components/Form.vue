@@ -2,7 +2,7 @@
   <div class="box">
     <div class="columns">
       <div
-        class="column is-8"
+        class="column is-5"
         role="form"
         aria-label="Formulário para criação de uma nova tarefa"
       >
@@ -17,8 +17,24 @@
           />
         </label>
       </div>
+      <div class="column is-3">
+        <div class="select">
+          <label for="project-id">
+            <select v-model="projectId" id="project-id" :disabled="!newTaskDescription">
+              <option value="">Selecione o projeto</option>
+              <option
+                :key="project.id"
+                v-for="project in projects"
+                :value="project.id"
+              >
+                {{ project.name }}
+              </option>
+            </select>
+          </label>
+        </div>
+      </div>
       <Timer
-        :disabled="!newTaskDescription"
+        :disabled="!newTaskDescription || !projectId"
         @task-finished="finishTask"
       />
     </div>
@@ -26,20 +42,30 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, ref } from 'vue';
+import IProject from '@/interfaces/IProject';
+import ITask from '@/interfaces/ITask';
+import useStore from '@/store';
+import { ref } from 'vue';
 import Timer from './Timer.vue';
 
-type EventsTyping = {
-  (event: 'saveTask', description: string, time: number): void
-}
-
-const emit = defineEmits<EventsTyping>();
+const { projects, addTask } = useStore();
 
 const newTaskDescription = ref('');
+const projectId = ref('');
 
 function finishTask(time: number) {
-  emit('saveTask', newTaskDescription.value, time);
-  newTaskDescription.value = '';
+  const project: IProject | undefined = projects.find(
+    (currentProject) => currentProject.id === projectId.value,
+  );
+  if (project) {
+    const task: ITask = {
+      description: newTaskDescription.value,
+      project,
+      time,
+    };
+    addTask(task);
+    newTaskDescription.value = '';
+  }
 }
 </script>
 
