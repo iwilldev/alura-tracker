@@ -1,7 +1,9 @@
 <template>
   <div class="column">
     <div class="is-flex is-align-items-center is-justify-content-space-between">
-      <Clock :time-in-seconds="timeInSeconds" />
+      <div :class="disabled ? 'barely-visible' : ''">
+        <Clock :time-in-seconds="timeInSeconds" />
+      </div>
       <ActionButton
         label="Play"
         faIcon="play"
@@ -30,7 +32,11 @@ const cronometro = ref(0);
 const timerIsActive = ref(false);
 const timerIsInactive = computed(() => !timerIsActive.value);
 
-const emit = defineEmits<{(event: 'taskFinished', time: number): void}>();
+type EventsTyping = {
+  (event: 'taskFinished', time: number): void
+}
+
+const emit = defineEmits<EventsTyping>();
 
 defineProps({
   disabled: {
@@ -53,3 +59,9 @@ function stopTimer() {
   timeInSeconds.value = 0;
 }
 </script>
+
+<style scoped>
+.barely-visible {
+  opacity: 0.5;
+}
+</style>
